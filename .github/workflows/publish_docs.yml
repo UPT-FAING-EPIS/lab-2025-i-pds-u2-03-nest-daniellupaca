@@ -21,15 +21,29 @@ jobs:
       with:
         node-version: '16'
 
-    - name: Install dependencies
-      run: npm install
+    - name: Install dependencies for ATM
+      run: |
+        cd atm
+        npm install
 
-    - name: Generate documentation with Compodoc
-      run: npx @compodoc/compodoc -p tsconfig.json -s
+    - name: Install dependencies for Payment
+      run: |
+        cd payment
+        npm install
+
+    - name: Generate documentation with Compodoc for ATM
+      run: |
+        cd atm
+        npx @compodoc/compodoc -p tsconfig.json -s
+
+    - name: Generate documentation with Compodoc for Payment
+      run: |
+        cd payment
+        npx @compodoc/compodoc -p tsconfig.json -s
 
     - name: Publish documentation to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4
       with:
-        branch: gh-pages  # Cambia esto si prefieres una rama diferente para la publicación
-        folder: documentation  # Asegúrate de que la documentación esté en esta carpeta
-        token: ${{ secrets.GITHUB_TOKEN }}  # Usa el token de GitHub
+        branch: gh-pages
+        folder: documentation
+        token: ${{ secrets.GITHUB_TOKEN }}
