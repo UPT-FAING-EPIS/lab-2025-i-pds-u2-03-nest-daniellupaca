@@ -1,4 +1,4 @@
-name: Build, Test, Analyze and Publish Packages
+name: Build, Test and Publish Packages
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-test-analyze-publish:
+  build-test-publish:
     runs-on: ubuntu-latest
 
     permissions:
@@ -23,7 +23,7 @@ jobs:
         node-version: '16'
         registry-url: 'https://npm.pkg.github.com/'
 
-    # ATM
+    # ATM package
     - name: Install ATM dependencies
       run: |
         cd atm
@@ -34,16 +34,6 @@ jobs:
         cd atm
         npm run test:cov
 
-    - name: Analyze ATM with SonarCloud
-      uses: sonarsource/sonarcloud-github-action@v2
-      with:
-        projectBaseDir: atm
-        args: >
-          -Dsonar.projectKey=upt-faing-epis_atm_lupaca
-          -Dsonar.organization=upt-faing-epis
-          -Dsonar.host.url=https://sonarcloud.io
-          -Dsonar.token=${{ secrets.SONAR_TOKEN }}
-
     - name: Publish ATM package
       run: |
         cd atm
@@ -52,7 +42,7 @@ jobs:
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # PAYMENT
+    # PAYMENT package
     - name: Install Payment dependencies
       run: |
         cd payment
@@ -62,16 +52,6 @@ jobs:
       run: |
         cd payment
         npm run test:cov
-
-    - name: Analyze Payment with SonarCloud
-      uses: sonarsource/sonarcloud-github-action@v2
-      with:
-        projectBaseDir: payment
-        args: >
-          -Dsonar.projectKey=upt-faing-epis_payment_lupaca
-          -Dsonar.organization=upt-faing-epis
-          -Dsonar.host.url=https://sonarcloud.io
-          -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
     - name: Publish Payment package
       run: |
