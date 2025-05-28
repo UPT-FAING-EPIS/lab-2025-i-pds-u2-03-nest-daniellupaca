@@ -34,12 +34,7 @@ jobs:
     - name: Generate documentation with Compodoc for ATM
       run: |
         cd atm
-        npx @compodoc/compodoc -p tsconfig.json -s
-
-    - name: Generate documentation with Compodoc for Payment
-      run: |
-        cd payment
-        npx @compodoc/compodoc -p tsconfig.json -s
+        npx @compodoc/compodoc -p tsconfig.json -d ../documentation
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
@@ -47,4 +42,3 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./documentation
         publish_branch: gh-pages
-
