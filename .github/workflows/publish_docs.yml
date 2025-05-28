@@ -1,0 +1,35 @@
+name: Publish Documentation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Generate documentation with Compodoc
+      run: npx @compodoc/compodoc -p tsconfig.json -s
+
+    - name: Publish documentation to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: gh-pages  # Cambia esto si prefieres una rama diferente para la publicación
+        folder: documentation  # Asegúrate de que la documentación esté en esta carpeta
+        token: ${{ secrets.GITHUB_TOKEN }}  # Usa el token de GitHub
