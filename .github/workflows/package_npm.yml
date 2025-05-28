@@ -32,7 +32,7 @@ jobs:
     - name: Run ATM tests
       run: |
         cd atm
-        npm run test:cov
+        npx jest --coverage
 
     - name: Publish ATM package
       run: |
@@ -51,7 +51,7 @@ jobs:
     - name: Run Payment tests
       run: |
         cd payment
-        npm run test:cov
+        npx jest --coverage
 
     - name: Publish Payment package
       run: |
