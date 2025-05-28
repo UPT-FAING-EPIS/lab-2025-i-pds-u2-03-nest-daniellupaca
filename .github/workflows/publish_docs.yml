@@ -41,9 +41,9 @@ jobs:
         cd payment
         npx @compodoc/compodoc -p tsconfig.json -s
 
-    - name: Publish documentation to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@v4
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        branch: gh-pages
-        folder: documentation
-        token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./documentation
+        publish_branch: gh-pages
