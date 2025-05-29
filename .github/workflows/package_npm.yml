@@ -34,6 +34,12 @@ jobs:
         cd atm
         npx jest --coverage
 
+    - name: Pack ATM module
+      run: |
+        cd atm
+        npm pack
+        mv *.tgz ../atm-latest.tgz
+
     - name: Publish ATM package
       run: |
         cd atm
@@ -53,6 +59,12 @@ jobs:
         cd payment
         npx jest --coverage
 
+    - name: Pack Payment module
+      run: |
+        cd payment
+        npm pack
+        mv *.tgz ../payment-latest.tgz
+
     - name: Publish Payment package
       run: |
         cd payment
@@ -60,3 +72,12 @@ jobs:
         npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # Subir como artefactos los .tgz generados
+    - name: Upload .tgz artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: npm-packages
+        path: |
+          atm-latest.tgz
+          payment-latest.tgz
